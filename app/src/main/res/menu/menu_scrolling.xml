@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/menu"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.journaldev.collapsingtoolbarlayout.ScrollingActivity">
+
+    <item
+        android:id="@+id/action_delete_all"
+        android:orderInCategory="100"
+        android:title="Delete all"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/action_view_by_category"
+        android:orderInCategory="100"
+        android:title="View by category"
+        app:showAsAction="never" />
+
+
+</menu>
