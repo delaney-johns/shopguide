@@ -10,6 +10,7 @@ import com.ait.todorecyclervewdemo.ScrollingActivity
 import com.ait.todorecyclervewdemo.data.AppDatabase
 import com.ait.todorecyclervewdemo.data.Item
 import com.ait.todorecyclervewdemo.touch.TodoTouchHelperCallback
+import kotlinx.android.synthetic.main.choose_category_dialog.view.*
 import kotlinx.android.synthetic.main.new_item_dialog.view.*
 import kotlinx.android.synthetic.main.item_row.view.*
 import java.util.*
@@ -40,6 +41,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, TodoTouchHelpe
         return itemList.size
     }
 
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         var item = itemList.get(holder.adapterPosition)
 
@@ -50,6 +52,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, TodoTouchHelpe
         holder.tvCategory.text = item.category
         holder.tvDescr.text = item.descr
 
+
         if (holder.tvCategory.text.toString().toLowerCase() == "bakery") {
             holder.ivCategory.setImageResource(R.drawable.bakery)
         } else if (holder.tvCategory.text.toString().toLowerCase() == "clothing") {
@@ -59,7 +62,6 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, TodoTouchHelpe
         }else if (holder.tvCategory.text.toString().toLowerCase() == "frozen") {
             holder.ivCategory.setImageResource(R.drawable.frozen)
         }else  holder.ivCategory.setImageResource(R.drawable.produce)
-        //holder.tvCategory.text = holder.spinner.getItemAtPosition(position).toString()
 
         holder.btnDelete.setOnClickListener {
             deleteItem(holder.adapterPosition)
@@ -90,6 +92,7 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, TodoTouchHelpe
         itemList.add(item)
         notifyItemInserted(itemList.lastIndex)
     }
+
 
     fun updateItem(item: Item) {
         Thread {
@@ -123,6 +126,12 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, TodoTouchHelpe
         }.start()
     }
 
+    fun showFilteredList(filteredList: List<Item>) {
+        itemList.clear()
+        itemList.addAll(filteredList.toMutableList())
+        notifyDataSetChanged()
+    }
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cbIsPurchased = itemView.cbIsPurchased
         val tvPrice = itemView.tvPrice
@@ -130,7 +139,6 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, TodoTouchHelpe
         val tvDescr = itemView.tvDescr
         val btnDelete = itemView.btnDelete
         val btnEdit = itemView.btnEdit
-        //val spinner = itemView.spinnerCategory
         val ivCategory = itemView.ivCategory
 
     }

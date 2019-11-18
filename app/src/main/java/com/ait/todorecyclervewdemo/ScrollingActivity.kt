@@ -5,18 +5,24 @@ import android.preference.PreferenceManager
 import android.text.AlteredCharSequence
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.room.Query
 import com.ait.todorecyclervewdemo.adapter.ItemAdapter
 import com.ait.todorecyclervewdemo.data.AppDatabase
 import com.ait.todorecyclervewdemo.data.Item
 import com.ait.todorecyclervewdemo.touch.TodoReyclerTouchCallback
 import kotlinx.android.synthetic.main.activity_scrolling.*
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
+import android.content.Intent
+import android.provider.AlarmClock.EXTRA_MESSAGE
+import com.ait.todorecyclervewdemo.touch.CategoryDialog
+import kotlinx.android.synthetic.main.choose_category_dialog.*
 
 
 class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
@@ -140,6 +146,8 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
     }
 
 
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         var inflater = getMenuInflater()
         inflater.inflate(R.menu.menu_scrolling, menu)
@@ -152,9 +160,14 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
                 val diaBox = askOption()
                 diaBox.show()
             }
+            "View by category" -> {
+
+                 val intent = Intent(this, CategoryViewActivity::class.java)
+                this.startActivity(intent)
+            }
+
         }
         return true
-
     }
 
     private fun askOption(): AlertDialog {
@@ -220,6 +233,7 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
             }
         }
     }
+
 
 }
 

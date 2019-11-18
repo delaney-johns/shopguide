@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".CategoryViewActivity"
+            android:parentActivityName=".ScrollingActivity"></activity>
         <activity
             android:name=".ScrollingActivity"
             android:label="@string/app_name"
