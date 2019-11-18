@@ -1,4 +1,4 @@
-package com.ait.todorecyclervewdemo.data
+package com.ait.shopguide.data
 
 import android.content.Context
 import androidx.room.Database
@@ -17,7 +17,7 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             if (INSTANCE == null) {
                 INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                    AppDatabase::class.java, "todo.db").fallbackToDestructiveMigration()
+                    AppDatabase::class.java, "item.db").fallbackToDestructiveMigration()
                     .build()
             }
             return INSTANCE!!

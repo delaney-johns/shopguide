@@ -1,4 +1,4 @@
-package com.ait.todorecyclervewdemo
+package com.ait.shopguide
 
 import androidx.test.platform.app.InstrumentationRegistry
 //import androidx.test.ext.junit.runners.AndroidJUnit4

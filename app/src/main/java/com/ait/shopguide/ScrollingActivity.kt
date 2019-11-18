@@ -1,35 +1,29 @@
-package com.ait.todorecyclervewdemo
+package com.ait.shopguide
 
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.text.AlteredCharSequence
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.interpolator.view.animation.FastOutSlowInInterpolator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.room.Query
-import com.ait.todorecyclervewdemo.adapter.ItemAdapter
-import com.ait.todorecyclervewdemo.data.AppDatabase
-import com.ait.todorecyclervewdemo.data.Item
-import com.ait.todorecyclervewdemo.touch.TodoReyclerTouchCallback
+import com.ait.shopguide.adapter.ItemAdapter
+import com.ait.shopguide.data.AppDatabase
+import com.ait.shopguide.data.Item
+import com.ait.shopguide.touch.ItemReyclerTouchCallback
 import kotlinx.android.synthetic.main.activity_scrolling.*
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt
 import android.content.Intent
-import android.provider.AlarmClock.EXTRA_MESSAGE
-import com.ait.todorecyclervewdemo.touch.CategoryDialog
-import kotlinx.android.synthetic.main.choose_category_dialog.*
 
 
 class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
     lateinit var itemAdapter: ItemAdapter
 
     companion object {
-        const val KEY_TODO = "KEY_TODO"
+        const val KEY_ITEM = "KEY_ITEM"
         const val KEY_STARTED = "KEY_STARTED"
         const val TAG_ITEM_DIALOG = "TAG_ITEM_DIALOG"
         const val TAG_ITEM_EDIT = "TAG_ITEM_EDIT"
@@ -92,10 +86,7 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
                 )
                 recyclerItem.addItemDecoration(itemDecoration)
 
-                //recyclerTodo.layoutManager =
-                //    GridLayoutManager(this, 2)
-
-                val callback = TodoReyclerTouchCallback(itemAdapter)
+                val callback = ItemReyclerTouchCallback(itemAdapter)
                 val touchHelper = ItemTouchHelper(callback)
                 touchHelper.attachToRecyclerView(recyclerItem)
             }
@@ -126,7 +117,7 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
         val editDialog = ItemDialog()
 
         val bundle = Bundle()
-        bundle.putSerializable(KEY_TODO, itemToEdit)
+        bundle.putSerializable(KEY_ITEM, itemToEdit)
         editDialog.arguments = bundle
 
         editDialog.show(supportFragmentManager, TAG_ITEM_EDIT)
@@ -156,11 +147,11 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.title.toString()) {
-            "Delete all" -> {
+            getString(R.string.delete_all) -> {
                 val diaBox = askOption()
                 diaBox.show()
             }
-            "View by category" -> {
+            getString(R.string.view_by_cat) -> {
 
                  val intent = Intent(this, CategoryViewActivity::class.java)
                 this.startActivity(intent)
@@ -173,14 +164,14 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
     private fun askOption(): AlertDialog {
 
         return AlertDialog.Builder(this)
-            .setTitle("Are you sure you want to delete your list?")
+            .setTitle(getString(R.string.delete_confirmation))
 
-            .setPositiveButton("Delete")
+            .setPositiveButton(getString(R.string.delete))
             { dialog, whichButton ->
                 itemAdapter.deleteAllItems()
                 dialog.dismiss()
             }
-            .setNegativeButton("Cancel")
+            .setNegativeButton(getString(R.string.negative_button_text))
             { dialog, which -> dialog.dismiss() }
             .create()
     }
@@ -188,9 +179,9 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
     private fun menuTutorial(): AlertDialog {
 
         return AlertDialog.Builder(this)
-            .setTitle("Tap the menu to view by category or delete all items. That's it!")
+            .setTitle(getString(R.string.menu_tutorial_text))
 
-            .setPositiveButton("Ok")
+            .setPositiveButton(R.string.positive_button_text)
             { dialog, whichButton ->
                 dialog.dismiss()
             }
@@ -202,14 +193,14 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
     private fun welcomeMsg(): AlertDialog {
 
         return AlertDialog.Builder(this)
-            .setTitle("Welcome to shopguide! Would you like a tutorial?")
+            .setTitle(getString(R.string.welcome_msg))
 
-            .setPositiveButton("Yes")
+            .setPositiveButton(getString(R.string.yes))
             { dialog, whichButton ->
                 fabTutorial()
 
             }
-            .setNegativeButton("Not right now") { dialog, whichButton ->
+            .setNegativeButton(getString(R.string.welcome_negative_button)) { dialog, whichButton ->
                 wasStartedBefore()
                 dialog.dismiss()
             }
@@ -220,8 +211,8 @@ class ScrollingActivity : AppCompatActivity(), ItemDialog.ItemHandler {
        val builder = MaterialTapTargetPrompt.Builder(this)
         builder
             .setTarget(R.id.fab)
-            .setPrimaryText("New item")
-            .setSecondaryText("Click here to create new items")
+            .setPrimaryText(getString(R.string.fab_tutorial_title))
+            .setSecondaryText(getString(R.string.fab_tutorial_text))
             .setAnimationInterpolator(FastOutSlowInInterpolator())
             .show()
 

@@ -1,23 +1,17 @@
-package com.ait.todorecyclervewdemo
+package com.ait.shopguide
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import android.view.View
-import android.view.animation.AnimationUtils
-import android.view.animation.OvershootInterpolator
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.DialogFragment
-import com.ait.todorecyclervewdemo.ScrollingActivity.Companion.KEY_TODO
-import com.ait.todorecyclervewdemo.data.Item
-import kotlinx.android.synthetic.main.activity_scrolling.*
+import com.ait.shopguide.ScrollingActivity.Companion.KEY_ITEM
+import com.ait.shopguide.data.Item
 import kotlinx.android.synthetic.main.new_item_dialog.view.*
 
 
@@ -38,7 +32,7 @@ class ItemDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
             itemHandler = context
         } else {
             throw RuntimeException(
-                "The activity does not implement the TodoHandlerInterface"
+                "The activity does not implement the ItemHandlerInterface"
             )
         }
     }
@@ -88,11 +82,11 @@ class ItemDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
         builder.setView(rootView)
 
 
-        isEditMode = ((arguments != null) && (arguments!!.containsKey(KEY_TODO)))
+        isEditMode = ((arguments != null) && (arguments!!.containsKey(KEY_ITEM)))
 
         if (isEditMode) {
             builder.setTitle("Edit item")
-            var item = (arguments?.getSerializable(KEY_TODO) as Item)
+            var item = (arguments?.getSerializable(KEY_ITEM) as Item)
             etName.setText(item.name)
             etPrice.setText(item.price)
             etDescr.setText(item.descr)
@@ -135,7 +129,7 @@ class ItemDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
                 dialog!!.dismiss()
 
             } else {
-                etName.error = "This field can not be empty"
+                etName.error = getString(R.string.etName_error_msg)
             }
         }
     }
@@ -166,7 +160,7 @@ class ItemDialog : DialogFragment(), AdapterView.OnItemSelectedListener {
 
     private fun handleItemEdit() {
         val itemToEdit = arguments?.getSerializable(
-            KEY_TODO
+            KEY_ITEM
         ) as Item
         itemToEdit.name = etName.text.toString()
         itemToEdit.descr = etDescr.text.toString()

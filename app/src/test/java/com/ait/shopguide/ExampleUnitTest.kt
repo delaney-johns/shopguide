@@ -1,4 +1,4 @@
-package com.ait.todorecyclervewdemo
+package com.ait.shopguide
 
 import org.junit.Test
 

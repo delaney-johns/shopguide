@@ -1,22 +1,20 @@
-package com.ait.todorecyclervewdemo.adapter
+package com.ait.shopguide.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.ait.todorecyclervewdemo.R
-import com.ait.todorecyclervewdemo.ScrollingActivity
-import com.ait.todorecyclervewdemo.data.AppDatabase
-import com.ait.todorecyclervewdemo.data.Item
-import com.ait.todorecyclervewdemo.touch.TodoTouchHelperCallback
-import kotlinx.android.synthetic.main.choose_category_dialog.view.*
-import kotlinx.android.synthetic.main.new_item_dialog.view.*
+import com.ait.shopguide.R
+import com.ait.shopguide.ScrollingActivity
+import com.ait.shopguide.data.AppDatabase
+import com.ait.shopguide.data.Item
+import com.ait.shopguide.touch.ItemTouchHelperCallback
 import kotlinx.android.synthetic.main.item_row.view.*
 import java.util.*
 
 
-class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, TodoTouchHelperCallback {
+class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, ItemTouchHelperCallback {
 
     var itemList = mutableListOf<Item>()
 
@@ -53,13 +51,13 @@ class ItemAdapter : RecyclerView.Adapter<ItemAdapter.ViewHolder>, TodoTouchHelpe
         holder.tvDescr.text = item.descr
 
 
-        if (holder.tvCategory.text.toString().toLowerCase() == "bakery") {
+        if (holder.tvCategory.text.toString().toLowerCase() == context.getString(R.string.bakery)) {
             holder.ivCategory.setImageResource(R.drawable.bakery)
-        } else if (holder.tvCategory.text.toString().toLowerCase() == "clothing") {
+        } else if (holder.tvCategory.text.toString().toLowerCase() == context.getString(R.string.clothing)) {
             holder.ivCategory.setImageResource(R.drawable.clothing)
-        } else if (holder.tvCategory.text.toString().toLowerCase() == "deli") {
+        } else if (holder.tvCategory.text.toString().toLowerCase() == context.getString(R.string.deli)) {
             holder.ivCategory.setImageResource(R.drawable.deli)
-        }else if (holder.tvCategory.text.toString().toLowerCase() == "frozen") {
+        }else if (holder.tvCategory.text.toString().toLowerCase() == context.getString(R.string.frozen)) {
             holder.ivCategory.setImageResource(R.drawable.frozen)
         }else  holder.ivCategory.setImageResource(R.drawable.produce)
 

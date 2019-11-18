@@ -1,7 +1,5 @@
-package com.ait.todorecyclervewdemo.data
+package com.ait.shopguide.data
 
-import android.media.Image
-import android.widget.ImageView
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
